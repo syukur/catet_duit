@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+import java.util.Locale;
 
 @Slf4j
 @Component
@@ -44,13 +45,21 @@ public class Initialization {
         handlers.forEach(handler -> {
             log.info("keyword: {}", handler.getKeyword());
             try {
+
+                //1. Init Handler Class
                 Class cs = Class.forName(handler.getHandler());
                 Constructor constructor = cs.getConstructor();
                 Handler objectHandler = (Handler) constructor.newInstance();
                 objectHandler.setTelegramClient(telegramClient);
                 objectHandler.setTransactionRepository(transactionRepository);
                 objectHandler.setHandlerConfig(handler);
-                handlerHolder.putHandler(handler.getKeyword(), objectHandler);
+
+
+                //2. Put Handler & keyword to collection
+                String[] keywordArray = handler.getKeyword().split("\\;");
+                for ( String keyword : keywordArray ){
+                    handlerHolder.putHandler(keyword.toLowerCase().trim(), objectHandler);
+                }
 
             } catch (Exception e) {
                 throw new RuntimeException(e);

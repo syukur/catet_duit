@@ -1,5 +1,6 @@
 package com.lylastudio.catetduit.handler;
 
+import com.lylastudio.catetduit.db.repository.MHandlerRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -38,5 +39,16 @@ public class HandlerHolder {
         }
 
         return handlers.get(newKeyword);
+    }
+
+    public HashMap<String, String> getInfo(){
+        HashMap<String,String>result = new HashMap<>();
+
+        handlers.forEach((key, value)->{
+            result.put(key, value.handlerConfig.getHandler());
+        });
+
+        return result;
+
     }
 }

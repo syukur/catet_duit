@@ -22,7 +22,7 @@ public class DoorController {
     @PostMapping("/put")
     public String putMessage(@RequestBody Update update ){
 
-        String keyword = update.getMessage().getText();
+        String keyword = update.getMessage().getText().toLowerCase().trim();
         Handler handler = handlerHolder.getHandler(keyword);
         handler.prepare(update);
         handler.execute(update);
