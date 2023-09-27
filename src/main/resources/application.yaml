@@ -1,0 +1,21 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer
+    username: postgres
+    password: P4c17890
+  jpa:
+    hibernate:
+      #ddl-auto: create-drop
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
+
+telegram:
+  baseurl: https://api.telegram.org/bot
+  token: 6397700603:AAFflPqjkIAIkYBlf8lXT5ZMxL5QUXtc8jo/
+  sendmessageurl: sendMessage
