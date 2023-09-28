@@ -5,6 +5,8 @@ import com.lylastudio.catetduit.db.entity.MTransactionCategory;
 import com.lylastudio.catetduit.db.repository.MHandlerRepository;
 import com.lylastudio.catetduit.db.repository.MTransactionCategoryRepository;
 import com.lylastudio.catetduit.db.repository.TransactionRepository;
+import com.lylastudio.catetduit.util.JSONFormater;
+import com.lylastudio.catetduit.util.StringHelper;
 import com.lylastudio.catetduit.util.TelegramClient;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -25,18 +27,26 @@ public class Initialization {
 
     private final TelegramClient telegramClient;
 
-    private MTransactionCategoryRepository mTransactionCategoryRepository;
+    private final MTransactionCategoryRepository mTransactionCategoryRepository;
+
+    private final JSONFormater jsonFormater;
+
+    private final StringHelper stringHelper;
 
     public Initialization(MHandlerRepository handlerRepository,
                           HandlerHolder handlerHolder,
                           TelegramClient telegramClient,
                           TransactionRepository transactionRepository,
-                          MTransactionCategoryRepository mTransactionCategoryRepository){
+                          MTransactionCategoryRepository mTransactionCategoryRepository,
+                          JSONFormater jsonFormater,
+                          StringHelper stringHelper){
         this.handlerRepository = handlerRepository;
         this.handlerHolder = handlerHolder;
         this.telegramClient = telegramClient;
         this.transactionRepository = transactionRepository;
         this.mTransactionCategoryRepository = mTransactionCategoryRepository;
+        this.jsonFormater = jsonFormater;
+        this.stringHelper = stringHelper;
     }
 
     @PostConstruct
@@ -53,7 +63,8 @@ public class Initialization {
                 objectHandler.setTelegramClient(telegramClient);
                 objectHandler.setTransactionRepository(transactionRepository);
                 objectHandler.setHandlerConfig(handler);
-
+                objectHandler.setJsonFormater(jsonFormater);
+                objectHandler.setStringHelper(stringHelper);
 
                 //2. Put Handler & keyword to collection
                 String[] keywordArray = handler.getKeyword().split("\\;");

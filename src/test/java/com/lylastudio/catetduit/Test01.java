@@ -41,4 +41,11 @@ public class Test01 {
         log.info(text.toUpperCase());
 
     }
+
+    @Test
+    void test04(){
+        String s = "agus ?";
+        log.info(s);
+        log.info(s.replace(" ", ""));
+    }
 }
