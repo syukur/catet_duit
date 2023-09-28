@@ -26,7 +26,9 @@ public class DoorController {
                         .trim()
                         .replace(" ", "");
 
-        Handler handler = handlerHolder.getHandler(keyword);
+        String chatId = String.valueOf( update.getMessage().getChat().getId() );
+
+        Handler handler = handlerHolder.getHandler(keyword,chatId);
         handler.prepare(update);
         handler.execute(update);
         handler.sendMessage();

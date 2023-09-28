@@ -24,8 +24,6 @@ public class TTransaction {
 
     private BigInteger amount;
 
-    private String category;
-
     private String note;
 
     private String name;
@@ -35,6 +33,12 @@ public class TTransaction {
 
     @Column(name = "created_date")
     private Date createdDate;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "m_category_id"
+    )
+    private MTransactionCategory transactionCategory;
 
     @PrePersist
     protected void onCreate(){

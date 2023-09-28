@@ -17,7 +17,7 @@ public class MHandler {
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "customer_id_sequence"
+            generator = "m_handler_sequence"
     )
     private Integer id;
 

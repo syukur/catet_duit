@@ -2,6 +2,7 @@ package com.lylastudio.catetduit.handler;
 
 import com.lylastudio.catetduit.db.entity.MHandler;
 import com.lylastudio.catetduit.db.entity.MTransactionCategory;
+import com.lylastudio.catetduit.db.repository.MAccountRespository;
 import com.lylastudio.catetduit.db.repository.MHandlerRepository;
 import com.lylastudio.catetduit.db.repository.MTransactionCategoryRepository;
 import com.lylastudio.catetduit.db.repository.TransactionRepository;
@@ -33,13 +34,17 @@ public class Initialization {
 
     private final StringHelper stringHelper;
 
+    private final MAccountRespository mAccountRespository;
+
     public Initialization(MHandlerRepository handlerRepository,
                           HandlerHolder handlerHolder,
                           TelegramClient telegramClient,
                           TransactionRepository transactionRepository,
                           MTransactionCategoryRepository mTransactionCategoryRepository,
                           JSONFormater jsonFormater,
-                          StringHelper stringHelper){
+                          StringHelper stringHelper,
+                          MAccountRespository mAccountRespository){
+
         this.handlerRepository = handlerRepository;
         this.handlerHolder = handlerHolder;
         this.telegramClient = telegramClient;
@@ -47,6 +52,7 @@ public class Initialization {
         this.mTransactionCategoryRepository = mTransactionCategoryRepository;
         this.jsonFormater = jsonFormater;
         this.stringHelper = stringHelper;
+        this.mAccountRespository = mAccountRespository;
     }
 
     @PostConstruct
@@ -65,11 +71,17 @@ public class Initialization {
                 objectHandler.setHandlerConfig(handler);
                 objectHandler.setJsonFormater(jsonFormater);
                 objectHandler.setStringHelper(stringHelper);
+                objectHandler.setmAccountRespository(mAccountRespository);
 
                 //2. Put Handler & keyword to collection
                 String[] keywordArray = handler.getKeyword().split("\\;");
                 for ( String keyword : keywordArray ){
-                    handlerHolder.putHandler(keyword.toLowerCase().trim(), objectHandler);
+                    handlerHolder.putHandler(
+                            keyword.toLowerCase().
+                                    trim().
+                                    replace(" ", "")
+                            , objectHandler
+                    );
                 }
 
             } catch (Exception e) {
@@ -79,13 +91,15 @@ public class Initialization {
 
     }
 
-    @PostConstruct
-    private void insert(){
-        MTransactionCategory category1 = new MTransactionCategory();
-        category1.setName("Personal");
+//    @PostConstruct
+//    private void insert(){
+//        MTransactionCategory category1 = new MTransactionCategory();
+//        category1.setName("Personal");
+//
+//        mTransactionCategoryRepository.save(category1);
+//    }
 
-        mTransactionCategoryRepository.save(category1);
-    }
+
 
 
 

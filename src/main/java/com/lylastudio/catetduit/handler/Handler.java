@@ -2,6 +2,7 @@ package com.lylastudio.catetduit.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lylastudio.catetduit.db.entity.MHandler;
+import com.lylastudio.catetduit.db.repository.MAccountRespository;
 import com.lylastudio.catetduit.db.repository.TransactionRepository;
 import com.lylastudio.catetduit.model.http.ResponseRoot;
 import com.lylastudio.catetduit.model.http.SendMessage;
@@ -31,6 +32,7 @@ public abstract class Handler {
 
     protected StringHelper stringHelper;
 
+    protected MAccountRespository mAccountRespository;
 
     public void prepare(Update update){
 
@@ -80,5 +82,9 @@ public abstract class Handler {
 
     public void setStringHelper(StringHelper stringHelper) {
         this.stringHelper = stringHelper;
+    }
+
+    public void setmAccountRespository(MAccountRespository mAccountRespository) {
+        this.mAccountRespository = mAccountRespository;
     }
 }

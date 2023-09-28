@@ -1,6 +1,7 @@
 
 spring:
   datasource:
+    initialization-mode: always
     url: jdbc:postgresql://localhost:5432/customer
     username: postgres
     password: P4c17890
@@ -13,7 +14,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
-
 
 telegram:
   baseurl: https://api.telegram.org/bot

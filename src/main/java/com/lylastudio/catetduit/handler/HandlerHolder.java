@@ -1,5 +1,6 @@
 package com.lylastudio.catetduit.handler;
 
+import com.lylastudio.catetduit.db.repository.MAccountRespository;
 import com.lylastudio.catetduit.db.repository.MHandlerRepository;
 import org.springframework.stereotype.Component;
 
@@ -9,15 +10,17 @@ import java.util.HashMap;
 public class HandlerHolder {
     private HashMap<String, Handler> handlers;
 
+
+
     public HandlerHolder(){
         handlers = new HashMap<>();
     }
 
-    public Handler getHandler(String keyword){
+    public Handler getHandler(String keyword, String chatId){
 
         Handler handler = handlers.get(keyword);
         if( handler == null ){
-            handler = tryGetAnotherHandler(keyword);
+            handler = tryGetAnotherHandler(keyword, chatId);
         }
 
         return handler;
@@ -28,17 +31,16 @@ public class HandlerHolder {
         handlers.put(keyword, handler);
     }
 
-    private Handler tryGetAnotherHandler(String keyword) {
-        String[] data = keyword.split("\\|");
+    private Handler tryGetAnotherHandler(String keyword, String chatId) {
+        String[] data = keyword.split("\\:");
 
-        String newKeyword="";
-        if( data.length == 3 ){
-            newKeyword = "insert-trx";
-        }else{
-            newKeyword ="keyword-not-define";
+        String newKeyword= data[0];
+        Handler handler = getHandler(newKeyword);
+        if( handler == null){
+            handler = getHandler("keyword-not-define");
         }
 
-        return handlers.get(newKeyword);
+        return handler;
     }
 
     public HashMap<String, String> getInfo(){
