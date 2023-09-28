@@ -1,9 +1,11 @@
 package com.lylastudio.catetduit.db.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 @Entity(name = "m_account")
 public class MAccount {
 

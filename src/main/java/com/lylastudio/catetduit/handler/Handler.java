@@ -36,7 +36,7 @@ public abstract class Handler {
 
     public void prepare(Update update){
 
-        specialData.put("fist_name",update.getMessage().getFrom().getFirstName());
+        specialData.put("first_name",update.getMessage().getFrom().getFirstName());
         specialData.put("last_name",update.getMessage().getFrom().getLastName());
         specialData.put("admin_name", Constants.ADMIN_NAME);
 
