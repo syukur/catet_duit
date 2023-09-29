@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lylastudio.catetduit.db.entity.MHandler;
 import com.lylastudio.catetduit.db.entity.MTransactionCategory;
 import com.lylastudio.catetduit.db.repository.MAccountRespository;
+import com.lylastudio.catetduit.db.repository.MHandlerRepository;
 import com.lylastudio.catetduit.db.repository.MTransactionCategoryRepository;
 import com.lylastudio.catetduit.db.repository.TransactionRepository;
 import com.lylastudio.catetduit.model.http.ResponseRoot;
@@ -42,6 +43,8 @@ public abstract class Handler {
     protected ArrayList<String> requestParameter;
 
     protected Update update;
+
+    protected MHandlerRepository mHandlerRepository;
 
     public void prepare() {
 
@@ -119,5 +122,9 @@ public abstract class Handler {
 
     public void setmTransactionCategoryRepository(MTransactionCategoryRepository mTransactionCategoryRepository) {
         this.mTransactionCategoryRepository = mTransactionCategoryRepository;
+    }
+
+    public void setmHandlerRepository(MHandlerRepository mHandlerRepository) {
+        this.mHandlerRepository = mHandlerRepository;
     }
 }

@@ -74,6 +74,8 @@ public class Initialization {
                 objectHandler.setStringHelper(stringHelper);
                 objectHandler.setmAccountRespository(mAccountRespository);
                 objectHandler.setmTransactionCategoryRepository(mTransactionCategoryRepository);
+                objectHandler.setmHandlerRepository(handlerRepository);
+
 
                 //2. Put Handler & keyword to collection
                 String[] keywordArray = handler.getKeyword().split("\\;");
