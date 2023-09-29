@@ -2,7 +2,9 @@ package com.lylastudio.catetduit.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lylastudio.catetduit.db.entity.MHandler;
+import com.lylastudio.catetduit.db.entity.MTransactionCategory;
 import com.lylastudio.catetduit.db.repository.MAccountRespository;
+import com.lylastudio.catetduit.db.repository.MTransactionCategoryRepository;
 import com.lylastudio.catetduit.db.repository.TransactionRepository;
 import com.lylastudio.catetduit.model.http.ResponseRoot;
 import com.lylastudio.catetduit.model.http.SendMessage;
@@ -22,6 +24,8 @@ public abstract class Handler {
     protected TelegramClient telegramClient;
 
     protected TransactionRepository transactionRepository;
+
+    protected MTransactionCategoryRepository mTransactionCategoryRepository;
 
     protected SendMessage sendMessage = new SendMessage();
 
@@ -111,5 +115,9 @@ public abstract class Handler {
 
     public void setUpdate(Update update) {
         this.update = update;
+    }
+
+    public void setmTransactionCategoryRepository(MTransactionCategoryRepository mTransactionCategoryRepository) {
+        this.mTransactionCategoryRepository = mTransactionCategoryRepository;
     }
 }

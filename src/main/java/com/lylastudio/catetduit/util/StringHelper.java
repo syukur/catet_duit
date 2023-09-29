@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class StringHelper {
 
     Pattern replacePattern = Pattern.compile("\\$\\{([^}]+)\\}");
-    Pattern splitPattern = Pattern.compile("\\$\\{([^}]+)\\}");
+    Pattern splitPattern = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"");
 
     public String replacePattern(String input, HashMap<String, String> replacer){
 

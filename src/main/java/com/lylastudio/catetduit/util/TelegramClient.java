@@ -38,6 +38,9 @@ public class TelegramClient {
 
     public ResponseRoot sendMessage(SendMessage sendMessage ){
 
+        log.info("base_url: " + telegramBaseUrl+telegramToken);
+        log.info("uri: " + sendMessageUrl);
+
         return restClient.post()
                 .uri(sendMessageUrl)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -46,6 +49,10 @@ public class TelegramClient {
                 .body(ResponseRoot.class);
 
     }
+
+//    public static void main(String[] args) {
+//        log.info("test");
+//    }
 
 
 }

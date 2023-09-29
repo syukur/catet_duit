@@ -43,7 +43,8 @@ public class Initialization {
                           MTransactionCategoryRepository mTransactionCategoryRepository,
                           JSONFormater jsonFormater,
                           StringHelper stringHelper,
-                          MAccountRespository mAccountRespository){
+                          MAccountRespository mAccountRespository
+    ){
 
         this.handlerRepository = handlerRepository;
         this.handlerHolder = handlerHolder;
@@ -72,6 +73,7 @@ public class Initialization {
                 objectHandler.setJsonFormater(jsonFormater);
                 objectHandler.setStringHelper(stringHelper);
                 objectHandler.setmAccountRespository(mAccountRespository);
+                objectHandler.setmTransactionCategoryRepository(mTransactionCategoryRepository);
 
                 //2. Put Handler & keyword to collection
                 String[] keywordArray = handler.getKeyword().split("\\;");
