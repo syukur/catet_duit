@@ -27,9 +27,13 @@ public class HandlerHolder {
         }
 
         Handler handler = handlers.get(keyword);
-        if( handler == null ){
-            handler = tryGetAnotherHandler(keyword);
+        if(handler == null){
+            handler = handlers.get("keyword-not-define");
         }
+
+//        if( handler == null ){
+//            handler = tryGetAnotherHandler(keyword);
+//        }
 
         return handler;
     }
@@ -39,17 +43,17 @@ public class HandlerHolder {
         handlers.put(keyword, handler);
     }
 
-    private Handler tryGetAnotherHandler(String keyword) {
-        String[] data = keyword.split("\\:");
-
-        String newKeyword= data[0];
-        Handler handler = handlers.get(newKeyword);
-        if( handler == null){
-            handler = handlers.get("keyword-not-define");
-        }
-
-        return handler;
-    }
+//    private Handler tryGetAnotherHandler(String keyword) {
+//        String[] data = keyword.split("\\:");
+//
+//        String newKeyword= data[0];
+//        Handler handler = handlers.get(newKeyword);
+//        if( handler == null){
+//            handler = handlers.get("keyword-not-define");
+//        }
+//
+//        return handler;
+//    }
 
     private boolean notRegisteredAccount(Update update){
 
