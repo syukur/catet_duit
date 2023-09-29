@@ -17,5 +17,5 @@ spring:
 
 telegram:
   baseurl: https://api.telegram.org/bot
-  token: FF
+  token: FFF
   sendmessageurl: /sendMessage
