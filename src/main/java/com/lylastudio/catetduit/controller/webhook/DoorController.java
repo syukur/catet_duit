@@ -28,12 +28,12 @@ public class DoorController {
 
         String text = update.getMessage()
                         .getText()
-                        .toLowerCase()
                         .trim();
 
         ArrayList<String> splitedString = stringHelper.splitString(text);
         
         String keyword = splitedString.get(0);
+        keyword = keyword.toLowerCase();
 
         Handler handler = handlerHolder.getHandler(keyword,update);
         handler.setRequestParameter(splitedString);

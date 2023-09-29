@@ -27,6 +27,7 @@ public class MHandler {
 
     private String responseFormat;
 
+    private String description;
 
 
 }

@@ -10,13 +10,13 @@ public class ListCategoryHandler extends Handler {
     @Override
     public void execute() {
 
-        String text = update.getMessage().getText();
-        Long fromId = update.getMessage().getFrom().getId();
+        String fromId = String.valueOf(
+                update.getMessage().getFrom().getId()
+        );
+
         String firtName = update.getMessage().getFrom().getFirstName();
 
-        MAccount account = mAccountRespository.findByFromId(
-                String.valueOf(fromId)
-        );
+        MAccount account = mAccountRespository.findByFromId(fromId);
 
         StringBuilder categories = new StringBuilder("Ok Pak ").append(firtName).append(" Berikut list kategorinya:\n\n");
 

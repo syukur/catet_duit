@@ -10,11 +10,10 @@ import java.math.BigInteger;
 public class AddCategoryHandler extends Handler {
     @Override
     public void execute() {
-
-        String text = update.getMessage().getText();
         Long fromId = update.getMessage().getFrom().getId();
-        String firtName = update.getMessage().getFrom().getFirstName();
+
         String categoryName = requestParameter.get(1);
+        categoryName = categoryName.trim();
 
         MAccount account = mAccountRespository.findByFromId(
                 String.valueOf(fromId)

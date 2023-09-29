@@ -28,8 +28,8 @@ public class TTransaction {
 
     private String name;
 
-    @Column(name = "telegram_sender_id")
-    private long telegramFromId;
+    @Column(name = "telegram_from_id")
+    private String telegramFromId;
 
     @Column(name = "created_date")
     private Date createdDate;
