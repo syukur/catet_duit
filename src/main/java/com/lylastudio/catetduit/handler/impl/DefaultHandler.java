@@ -9,11 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 public class DefaultHandler extends Handler {
 
     @Override
-    public void execute(Update update){
-        try {
-            log.info("receiving-update: {}", jsonFormater.toJSONString(update));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public void execute(){
+
     }
 }

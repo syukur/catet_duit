@@ -8,7 +8,7 @@ import java.math.BigInteger;
 
 public class TransactionHandler extends Handler {
     @Override
-    public void execute(Update update) {
+    public void execute() {
 
         String text = update.getMessage().getText();
         Long fromId = update.getMessage().getFrom().getId();

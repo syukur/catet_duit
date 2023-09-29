@@ -6,7 +6,7 @@ import com.lylastudio.catetduit.model.http.Update;
 
 public class NotRegisteredHandler extends Handler {
     @Override
-    public void execute(Update update) {
+    public void execute() {
 
         MAccount account = new MAccount();
         account.setFirstName(update.getMessage().getFrom().getFirstName());

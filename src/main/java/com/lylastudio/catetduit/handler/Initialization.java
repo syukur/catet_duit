@@ -77,9 +77,7 @@ public class Initialization {
                 String[] keywordArray = handler.getKeyword().split("\\;");
                 for ( String keyword : keywordArray ){
                     handlerHolder.putHandler(
-                            keyword.toLowerCase().
-                                    trim().
-                                    replace(" ", "")
+                            keyword.toLowerCase().trim()
                             , objectHandler
                     );
                 }

@@ -13,6 +13,7 @@ import com.lylastudio.catetduit.util.StringHelper;
 import com.lylastudio.catetduit.util.TelegramClient;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Slf4j
@@ -34,7 +35,18 @@ public abstract class Handler {
 
     protected MAccountRespository mAccountRespository;
 
-    public void prepare(Update update){
+    protected ArrayList<String> requestParameter;
+
+    protected Update update;
+
+    public void prepare() {
+
+        try {
+            log.info("receive-from-telegram: {}", jsonFormater.toJSONString(update));
+        } catch (JsonProcessingException e) {
+            log.error("Error When Try To extract JSON");
+            throw new RuntimeException(e);
+        }
 
         specialData.put("first_name",update.getMessage().getFrom().getFirstName());
         specialData.put("last_name",update.getMessage().getFrom().getLastName());
@@ -58,9 +70,14 @@ public abstract class Handler {
 
     }
 
-    abstract public void execute(Update update);
+    abstract public void execute();
 
     public void sendMessage(){
+        try {
+            log.info("send-to-telegram: {} ", jsonFormater.toJSONString(sendMessage));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         ResponseRoot responseRoot = telegramClient.sendMessage(sendMessage);
     }
 
@@ -86,5 +103,13 @@ public abstract class Handler {
 
     public void setmAccountRespository(MAccountRespository mAccountRespository) {
         this.mAccountRespository = mAccountRespository;
+    }
+
+    public void setRequestParameter(ArrayList<String> requestParameter) {
+        this.requestParameter = requestParameter;
+    }
+
+    public void setUpdate(Update update) {
+        this.update = update;
     }
 }

@@ -3,8 +3,11 @@ package com.lylastudio.catetduit.controller.webhook;
 import com.lylastudio.catetduit.handler.Handler;
 import com.lylastudio.catetduit.handler.HandlerHolder;
 import com.lylastudio.catetduit.model.http.Update;
+import com.lylastudio.catetduit.util.StringHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @Slf4j
 @RestController
@@ -12,26 +15,37 @@ import org.springframework.web.bind.annotation.*;
 public class DoorController {
 
     private final HandlerHolder handlerHolder;
+    
+    private final StringHelper stringHelper;
 
-    public DoorController(HandlerHolder handlerHolder) {
+    public DoorController(HandlerHolder handlerHolder, StringHelper stringHelper) {
         this.handlerHolder = handlerHolder;
+        this.stringHelper = stringHelper;
     }
 
     @PostMapping("/put")
     public String putMessage(@RequestBody Update update ){
 
-        String keyword = update.getMessage()
+        String text = update.getMessage()
                         .getText()
                         .toLowerCase()
-                        .trim()
-                        .replace(" ", "");
+                        .trim();
+
+        ArrayList<String> splitedString = stringHelper.splitString(text);
+        
+        String keyword = splitedString.get(0);
 
         Handler handler = handlerHolder.getHandler(keyword,update);
-        handler.prepare(update);
-        handler.execute(update);
+        handler.setRequestParameter(splitedString);
+        handler.setUpdate(update);
+        
+        handler.prepare();
+        handler.execute();
         handler.sendMessage();
 
         return "True";
     }
+
+    
 
 }
