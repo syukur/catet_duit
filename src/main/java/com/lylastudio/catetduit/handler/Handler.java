@@ -3,10 +3,7 @@ package com.lylastudio.catetduit.handler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lylastudio.catetduit.db.entity.MHandler;
 import com.lylastudio.catetduit.db.entity.MTransactionCategory;
-import com.lylastudio.catetduit.db.repository.MAccountRespository;
-import com.lylastudio.catetduit.db.repository.MHandlerRepository;
-import com.lylastudio.catetduit.db.repository.MTransactionCategoryRepository;
-import com.lylastudio.catetduit.db.repository.TransactionRepository;
+import com.lylastudio.catetduit.db.repository.*;
 import com.lylastudio.catetduit.model.http.ResponseRoot;
 import com.lylastudio.catetduit.model.http.SendMessage;
 import com.lylastudio.catetduit.model.http.Update;
@@ -45,6 +42,8 @@ public abstract class Handler {
     protected Update update;
 
     protected MHandlerRepository mHandlerRepository;
+
+    protected TOneTimeAccessRepository tOneTimeAccessRepository;
 
     public void prepare() {
 
@@ -126,5 +125,9 @@ public abstract class Handler {
 
     public void setmHandlerRepository(MHandlerRepository mHandlerRepository) {
         this.mHandlerRepository = mHandlerRepository;
+    }
+
+    public void settOneTimeAccessRepository(TOneTimeAccessRepository tOneTimeAccessRepository) {
+        this.tOneTimeAccessRepository = tOneTimeAccessRepository;
     }
 }

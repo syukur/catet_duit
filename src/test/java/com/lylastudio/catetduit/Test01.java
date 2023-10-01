@@ -1,8 +1,13 @@
 package com.lylastudio.catetduit;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
@@ -62,6 +67,30 @@ public class Test01 {
         for (String word : words) {
             log.info(word);
         }
+    }
+
+    @Test
+    void sha256Test(){
+        String input ="Ninja Hatori";
+        String hash = DigestUtils.sha256Hex(input);
+        log.info("hash: " + hash);
+    }
+
+    @Test
+    void testUrl() throws MalformedURLException {
+        String urlString = "http://localhost:8080/web/v1/report.html?id=10";
+        URL url = new URL(urlString);
+        log.info("path : {}",url.getPath());
+        log.info("query : {}",url.getQuery());
+        log.info("fragment : {}",url.getRef());
+    }
+
+    @Test
+    void jsonTest() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("","");
+        json.put("","");
+        json.put("","");
     }
 
     public static ArrayList<String> splitString(String input) {

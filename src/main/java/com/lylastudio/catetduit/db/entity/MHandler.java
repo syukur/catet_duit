@@ -3,8 +3,6 @@ package com.lylastudio.catetduit.db.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.math.BigInteger;
-
 @Data
 @Entity(name = "m_handler")
 public class MHandler {
@@ -28,6 +26,8 @@ public class MHandler {
     private String responseFormat;
 
     private String description;
+
+    private String returnUrl;
 
 
 }

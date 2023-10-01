@@ -1,5 +1,7 @@
-
 spring:
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/
   datasource:
     initialization-mode: always
     url: jdbc:postgresql://localhost:5432/customer
@@ -17,5 +19,6 @@ spring:
 
 telegram:
   baseurl: https://api.telegram.org/bot
-  token: -
+  token: XXX
   sendmessageurl: /sendMessage
+  secret-token: XXX

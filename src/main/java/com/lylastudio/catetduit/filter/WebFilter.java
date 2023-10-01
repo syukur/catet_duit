@@ -1,0 +1,67 @@
+package com.lylastudio.catetduit.filter;
+
+import com.lylastudio.catetduit.db.entity.TOneTimeAccess;
+import com.lylastudio.catetduit.db.repository.TOneTimeAccessRepository;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+
+@Slf4j
+public class WebFilter implements Filter {
+
+    private final TOneTimeAccessRepository tOneTimeAccessRepository;
+
+    public WebFilter(
+            TOneTimeAccessRepository tOneTimeAccessRepository
+    ){
+        this.tOneTimeAccessRepository = tOneTimeAccessRepository;
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        Filter.super.init(filterConfig);
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+
+       HttpServletRequest request = (HttpServletRequest) servletRequest;
+       HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+       //String requestUrl = httpServletRequest.getRequestURI();
+       String requestParameter = request.getQueryString();
+
+      String signature = "";
+      String[] arrOfParam = requestParameter.split("&");
+      for ( String param : arrOfParam ){
+          String[] arrOfKeyValue = param.split("=");
+          String key = arrOfKeyValue[0];
+          if(key.equals("r")){
+             signature =  arrOfKeyValue[1];
+          }
+      }
+
+
+
+      log.info("signature: {}", signature);
+
+      TOneTimeAccess access = tOneTimeAccessRepository.findBySignature(signature);
+
+      if(access == null){
+          log.info("MASuk SC_UNAUTHORIZED");
+          response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UNAUTHORIZED");
+        return;
+      }
+
+
+      chain.doFilter(servletRequest, servletResponse);
+    }
+
+    @Override
+    public void destroy() {
+        Filter.super.destroy();
+    }
+}

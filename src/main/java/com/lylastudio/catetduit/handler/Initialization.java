@@ -2,10 +2,7 @@ package com.lylastudio.catetduit.handler;
 
 import com.lylastudio.catetduit.db.entity.MHandler;
 import com.lylastudio.catetduit.db.entity.MTransactionCategory;
-import com.lylastudio.catetduit.db.repository.MAccountRespository;
-import com.lylastudio.catetduit.db.repository.MHandlerRepository;
-import com.lylastudio.catetduit.db.repository.MTransactionCategoryRepository;
-import com.lylastudio.catetduit.db.repository.TransactionRepository;
+import com.lylastudio.catetduit.db.repository.*;
 import com.lylastudio.catetduit.util.JSONFormater;
 import com.lylastudio.catetduit.util.StringHelper;
 import com.lylastudio.catetduit.util.TelegramClient;
@@ -36,6 +33,8 @@ public class Initialization {
 
     private final MAccountRespository mAccountRespository;
 
+    private final TOneTimeAccessRepository tOneTimeAccessRepository;
+
     public Initialization(MHandlerRepository handlerRepository,
                           HandlerHolder handlerHolder,
                           TelegramClient telegramClient,
@@ -43,7 +42,8 @@ public class Initialization {
                           MTransactionCategoryRepository mTransactionCategoryRepository,
                           JSONFormater jsonFormater,
                           StringHelper stringHelper,
-                          MAccountRespository mAccountRespository
+                          MAccountRespository mAccountRespository,
+                          TOneTimeAccessRepository tOneTimeAccessRepository
     ){
 
         this.handlerRepository = handlerRepository;
@@ -54,6 +54,7 @@ public class Initialization {
         this.jsonFormater = jsonFormater;
         this.stringHelper = stringHelper;
         this.mAccountRespository = mAccountRespository;
+        this.tOneTimeAccessRepository = tOneTimeAccessRepository;
     }
 
     @PostConstruct
@@ -75,7 +76,7 @@ public class Initialization {
                 objectHandler.setmAccountRespository(mAccountRespository);
                 objectHandler.setmTransactionCategoryRepository(mTransactionCategoryRepository);
                 objectHandler.setmHandlerRepository(handlerRepository);
-
+                objectHandler.settOneTimeAccessRepository(tOneTimeAccessRepository);
 
                 //2. Put Handler & keyword to collection
                 String[] keywordArray = handler.getKeyword().split("\\;");
