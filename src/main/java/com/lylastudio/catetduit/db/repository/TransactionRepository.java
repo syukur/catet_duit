@@ -14,14 +14,22 @@ public interface TransactionRepository extends JpaRepository<TTransaction, Integ
 
 
     @Query(
-            value = "SELECT SUM(t.amount) FROM t_transaction t WHERE t.telegram_from_id = :telegramFromId",
-        nativeQuery = true
+            value = "SELECT SUM(t.amount) " +
+                    "FROM t_transaction t " +
+                    "WHERE t.telegram_from_id = :telegramFromId " +
+                    "AND to_char(t.created_date,'YYYY-MM-DD') = to_char(now(),'YYYY-MM-DD')",
+            nativeQuery = true
     )
     public BigInteger calculateAmountBySenderId(@Param("telegramFromId") String telegramFromId);
 
-//    @Query(
-//            value = "SELECT SUM(t.amount) FROM TTransaction t WHERE t.telegramFromId = :telegramFromId"
-//    )
-//    public BigInteger calculateAmountBySenderIdDua(@Param("telegramFromId") String telegramFromId);
+    @Query(
+            value = "SELECT * from t_transaction tt " +
+                    "WHERE to_char(tt.created_date,'YYYY-MM-DD') = to_char(now(),'YYYY-MM-DD') " +
+                    "AND telegram_from_id = :telegramFromId",
+            nativeQuery = true
+    )
+    public List<TTransaction> findBySenderIdAndDay(@Param("telegramFromId") String telegramFromId);
+
+
 
 }

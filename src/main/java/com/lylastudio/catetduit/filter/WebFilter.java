@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 @Slf4j
 public class WebFilter implements Filter {
@@ -44,16 +46,24 @@ public class WebFilter implements Filter {
           }
       }
 
-
-
       log.info("signature: {}", signature);
 
       TOneTimeAccess access = tOneTimeAccessRepository.findBySignature(signature);
 
       if(access == null){
-          log.info("MASuk SC_UNAUTHORIZED");
+          log.info("UNAUTHORIZED: access-token-not-found");
           response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UNAUTHORIZED");
         return;
+      }else{
+
+        Date now = new Date();
+
+        if ( now.after(access.getExpired()) ){
+            log.info("SC_UNAUTHORIZED: link-expired.");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UNAUTHORIZED");
+        }
+
+
       }
 
 

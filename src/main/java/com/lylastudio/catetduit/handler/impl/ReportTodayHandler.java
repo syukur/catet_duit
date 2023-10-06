@@ -2,10 +2,19 @@ package com.lylastudio.catetduit.handler.impl;
 
 import com.lylastudio.catetduit.db.entity.TTransaction;
 import com.lylastudio.catetduit.handler.Handler;
+import lombok.extern.slf4j.Slf4j;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
+@Slf4j
 public class ReportTodayHandler extends Handler {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @Override
     public void execute() {
 
@@ -13,7 +22,11 @@ public class ReportTodayHandler extends Handler {
                 update.getMessage().getFrom().getId()
         );
 
-        List<TTransaction> transactions = transactionRepository.findByTelegramFromId(fromId);
+
+
+        String tgl = LocalDateTime.now().format(formatter);
+        List<TTransaction> transactions = transactionRepository.findBySenderIdAndDay(fromId);
+
         if(transactions.size() < 1){
             sendMessage.setText("Blm ada catatan pengeluaran hari ini pak.");
         }else {
@@ -29,8 +42,10 @@ public class ReportTodayHandler extends Handler {
 
            response.append("Total : ").append(transactionRepository.calculateAmountBySenderId(fromId));
 
-            sendMessage.setText(response.toString());
+           sendMessage.setText(response.toString());
         }
 
     }
+
+
 }
