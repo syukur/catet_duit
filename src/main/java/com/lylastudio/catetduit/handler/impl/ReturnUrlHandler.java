@@ -62,7 +62,7 @@ public class ReturnUrlHandler extends Handler {
         newAccess.setExpired(expired);
 
         tOneTimeAccessRepository.save(newAccess);
-        sendMessage.setText("Berikut link report nya pak "+ url);
+        sendMessage.setText("Berikut link report nya pak "+ url.toString() + "?r=" + signature);
 
     }
 

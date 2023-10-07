@@ -1,4 +1,4 @@
-package com.lylastudio.catetduit.model.http;
+package com.lylastudio.catetduit.model.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

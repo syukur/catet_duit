@@ -2,8 +2,7 @@ package com.lylastudio.catetduit.handler;
 
 import com.lylastudio.catetduit.db.entity.MAccount;
 import com.lylastudio.catetduit.db.repository.MAccountRespository;
-import com.lylastudio.catetduit.db.repository.MHandlerRepository;
-import com.lylastudio.catetduit.model.http.Update;
+import com.lylastudio.catetduit.model.api.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

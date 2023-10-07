@@ -2,7 +2,7 @@ package com.lylastudio.catetduit.controller.webhook;
 
 import com.lylastudio.catetduit.handler.Handler;
 import com.lylastudio.catetduit.handler.HandlerHolder;
-import com.lylastudio.catetduit.model.http.Update;
+import com.lylastudio.catetduit.model.api.Update;
 import com.lylastudio.catetduit.util.StringHelper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

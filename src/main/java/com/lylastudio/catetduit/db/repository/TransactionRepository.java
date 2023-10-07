@@ -10,7 +10,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<TTransaction, Integer> {
-    public List<TTransaction> findByTelegramFromId(String telegramFromId);
+    public List<TTransaction> findByTelegramFromIdOrderById(String telegramFromId);
 
 
     @Query(
@@ -29,6 +29,17 @@ public interface TransactionRepository extends JpaRepository<TTransaction, Integ
             nativeQuery = true
     )
     public List<TTransaction> findBySenderIdAndDay(@Param("telegramFromId") String telegramFromId);
+
+    @Query(
+            value = "SELECT * from t_transaction tt " +
+                    "WHERE to_char(tt.created_date,'YYYY-MM-DD') BETWEEN :from AND :to " +
+                    "AND telegram_from_id = :telegramFromId " +
+                    "order BY id",
+            nativeQuery = true
+    )
+    public List<TTransaction> findBetween(@Param("from") String from,
+                                          @Param("to") String to,
+                                          @Param("telegramFromId") String telegramFromId);
 
 
 

@@ -2,11 +2,10 @@ package com.lylastudio.catetduit.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lylastudio.catetduit.db.entity.MHandler;
-import com.lylastudio.catetduit.db.entity.MTransactionCategory;
 import com.lylastudio.catetduit.db.repository.*;
-import com.lylastudio.catetduit.model.http.ResponseRoot;
-import com.lylastudio.catetduit.model.http.SendMessage;
-import com.lylastudio.catetduit.model.http.Update;
+import com.lylastudio.catetduit.model.api.ResponseRoot;
+import com.lylastudio.catetduit.model.api.SendMessage;
+import com.lylastudio.catetduit.model.api.Update;
 import com.lylastudio.catetduit.util.Constants;
 import com.lylastudio.catetduit.util.JSONFormater;
 import com.lylastudio.catetduit.util.StringHelper;

@@ -1,14 +1,12 @@
 package com.lylastudio.catetduit.util;
 
-import com.lylastudio.catetduit.model.http.Message;
-import com.lylastudio.catetduit.model.http.ResponseRoot;
-import com.lylastudio.catetduit.model.http.SendMessage;
+import com.lylastudio.catetduit.model.api.ResponseRoot;
+import com.lylastudio.catetduit.model.api.SendMessage;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 @Slf4j

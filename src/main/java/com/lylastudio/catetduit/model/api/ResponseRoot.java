@@ -1,4 +1,4 @@
-package com.lylastudio.catetduit.model.http;
+package com.lylastudio.catetduit.model.api;
 
 import lombok.Data;
 

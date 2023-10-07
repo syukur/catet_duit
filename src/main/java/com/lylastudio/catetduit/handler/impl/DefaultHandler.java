@@ -1,8 +1,6 @@
 package com.lylastudio.catetduit.handler.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lylastudio.catetduit.handler.Handler;
-import com.lylastudio.catetduit.model.http.Update;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

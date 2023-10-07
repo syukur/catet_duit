@@ -33,40 +33,39 @@ public class WebFilter implements Filter {
        HttpServletRequest request = (HttpServletRequest) servletRequest;
        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-
-        chain.doFilter(servletRequest, servletResponse);
-
-       String requestParameter = request.getQueryString();
-
-      String signature = "";
-      String[] arrOfParam = requestParameter.split("&");
-      for ( String param : arrOfParam ){
-          String[] arrOfKeyValue = param.split("=");
-          String key = arrOfKeyValue[0];
-          if(key.equals("r")){
-             signature =  arrOfKeyValue[1];
-          }
-      }
-
-      log.info("signature: {}", signature);
-
-      TOneTimeAccess access = tOneTimeAccessRepository.findBySignature(signature);
-
-      if(access == null){
-          log.info("UNAUTHORIZED: access-token-not-found");
-          response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UNAUTHORIZED");
-        return;
-      }else{
-
-        Date now = new Date();
-
-        if ( now.after(access.getExpired()) ){
-            log.info("UNAUTHORIZED: link-expired.");
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UNAUTHORIZED");
-        }
-
-      }
-
+      log.info("method: {}", request.getMethod() );
+//
+//       String requestParameter = request.getQueryString();
+//
+//      String signature = "";
+//      String[] arrOfParam = requestParameter.split("&");
+//      for ( String param : arrOfParam ){
+//          String[] arrOfKeyValue = param.split("=");
+//          String key = arrOfKeyValue[0];
+//          if(key.equals("r")){
+//             signature =  arrOfKeyValue[1];
+//          }
+//      }
+//
+//      log.info("signature: {}", signature);
+//
+//      TOneTimeAccess access = tOneTimeAccessRepository.findBySignature(signature);
+//
+//      if(access == null){
+//          log.info("UNAUTHORIZED: access-token-not-found");
+//          response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UNAUTHORIZED");
+//        return;
+//      }else{
+//
+//        Date now = new Date();
+//
+//        if ( now.after(access.getExpired()) ){
+//            log.info("UNAUTHORIZED: link-expired.");
+//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UNAUTHORIZED");
+//        }
+//
+//      }
+//
 
       chain.doFilter(servletRequest, servletResponse);
     }
