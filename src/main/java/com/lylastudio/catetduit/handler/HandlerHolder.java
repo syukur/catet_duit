@@ -31,10 +31,6 @@ public class HandlerHolder {
             handler = handlers.get("keyword-not-define");
         }
 
-//        if( handler == null ){
-//            handler = tryGetAnotherHandler(keyword);
-//        }
-
         return handler;
     }
 

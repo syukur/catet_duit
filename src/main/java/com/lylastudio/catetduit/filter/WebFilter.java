@@ -33,7 +33,9 @@ public class WebFilter implements Filter {
        HttpServletRequest request = (HttpServletRequest) servletRequest;
        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-       //String requestUrl = httpServletRequest.getRequestURI();
+
+        chain.doFilter(servletRequest, servletResponse);
+
        String requestParameter = request.getQueryString();
 
       String signature = "";
@@ -59,10 +61,9 @@ public class WebFilter implements Filter {
         Date now = new Date();
 
         if ( now.after(access.getExpired()) ){
-            log.info("SC_UNAUTHORIZED: link-expired.");
+            log.info("UNAUTHORIZED: link-expired.");
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UNAUTHORIZED");
         }
-
 
       }
 

@@ -8,14 +8,17 @@ public class NotRegisteredHandler extends Handler {
     @Override
     public void execute() {
 
-        MAccount account = new MAccount();
-        account.setFirstName(update.getMessage().getFrom().getFirstName());
-        account.setLastName(update.getMessage().getFrom().getLastName());
-        account.setChatId(String.valueOf(update.getMessage().getChat().getId()));
-        account.setFromId(String.valueOf(update.getMessage().getFrom().getId()));
-        account.setUserName(update.getMessage().getFrom().getUserName());
+        MAccount existingAccount = mAccountRespository.findByFromId( String.valueOf(update.getMessage().getFrom().getId()));
+        if(existingAccount == null){
+            MAccount account = new MAccount();
+            account.setFirstName(update.getMessage().getFrom().getFirstName());
+            account.setLastName(update.getMessage().getFrom().getLastName());
+            account.setChatId(String.valueOf(update.getMessage().getChat().getId()));
+            account.setFromId(String.valueOf(update.getMessage().getFrom().getId()));
+            account.setUserName(update.getMessage().getFrom().getUserName());
 
-        mAccountRespository.save(account);
+            mAccountRespository.save(account);
+        }
 
     }
 }

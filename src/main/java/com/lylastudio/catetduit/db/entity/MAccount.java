@@ -11,13 +11,13 @@ public class MAccount {
 
     @Id
     @SequenceGenerator(
-            name = "m_handler_sequence",
-            sequenceName = "m_handler_sequence",
+            name = "m_account_sequence",
+            sequenceName = "m_account_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "m_handler_sequence"
+            generator = "m_account_sequence"
     )
     private Integer id;
 
