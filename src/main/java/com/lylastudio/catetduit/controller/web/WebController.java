@@ -43,18 +43,57 @@ public class WebController {
         searchInput.setToken(signature);
 
         model.addAttribute("searchInput", searchInput);
-        model.addAttribute("trxs", transactionRepository.findBetween(from.toString(), to.toString(),access.getFromId()));
-        model.addAttribute("total", transactionRepository.calculateAmountBySenderId(access.getFromId()));
+        model.addAttribute(
+                "trxs",
+                transactionRepository.findBetween(
+                        from.toString(),
+                        to.toString(),
+                        access.getFromId()
+                )
+        );
+
+        log.info("from__: {}, to__: {}", from.toString(), to.toString());
+
+        model.addAttribute(
+                "total",
+                transactionRepository.totalByFromIdAndRange(
+                        searchInput.getFrom(),
+                        searchInput.getTo(),
+                        access.getFromId()
+                )
+        );
+
+
 
         return "report-header";
     }
 
     @PostMapping("/report")
     public String search(Model model, @ModelAttribute("searchInput") BetweenSearchInput searchInput){
+
         log.info("from: {}, to: {}",searchInput.getFrom(), searchInput.getTo());
+
         TOneTimeAccess access = tOneTimeAccessRepository.findBySignature(searchInput.getToken());
-        model.addAttribute("trxs", transactionRepository.findBetween(searchInput.getFrom(),searchInput.getTo(),access.getFromId()));
-        model.addAttribute("total", transactionRepository.calculateAmountBySenderId(access.getFromId()));
+
+        model.addAttribute(
+                "trxs",
+                transactionRepository.findBetween(
+                        searchInput.getFrom(),
+                        searchInput.getTo(),
+                        access.getFromId()
+                )
+
+        );
+
+        model.addAttribute(
+                "total",
+                transactionRepository.totalByFromIdAndRange(
+                        searchInput.getFrom(),
+                        searchInput.getTo(),
+                        access.getFromId()
+                )
+        );
+
         return "report-header";
     }
 

@@ -12,7 +12,6 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<TTransaction, Integer> {
     public List<TTransaction> findByTelegramFromIdOrderById(String telegramFromId);
 
-
     @Query(
             value = "SELECT SUM(t.amount) " +
                     "FROM t_transaction t " +
@@ -41,6 +40,19 @@ public interface TransactionRepository extends JpaRepository<TTransaction, Integ
                                           @Param("to") String to,
                                           @Param("telegramFromId") String telegramFromId);
 
+
+    @Query(
+            value = "SELECT SUM(amount) " +
+                    "FROM t_transaction " +
+                    "WHERE telegram_from_id = :telegramFromId " +
+                    "AND ( " +
+                            "to_char(created_date,'YYYY-MM-DD') BETWEEN :from AND :to " +
+                    ")",
+            nativeQuery = true
+    )
+    public BigInteger totalByFromIdAndRange(@Param("from") String from,
+                                          @Param("to") String to,
+                                          @Param("telegramFromId") String telegramFromId);
 
 
 }

@@ -4,11 +4,16 @@ import com.lylastudio.catetduit.db.entity.MAccount;
 import com.lylastudio.catetduit.db.entity.MTransactionCategory;
 import com.lylastudio.catetduit.db.entity.TTransaction;
 import com.lylastudio.catetduit.handler.Handler;
+import com.lylastudio.catetduit.util.Constants;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class TransactionHandler extends Handler {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @Override
     public void execute() {
 
@@ -60,6 +65,26 @@ public class TransactionHandler extends Handler {
             transaction.setName(firtName);
             transaction.setTransactionCategory(category);
             transactionRepository.save(transaction);
+
+            String tgl = LocalDateTime.now().format(formatter);
+            List<TTransaction> transactions = transactionRepository.findBySenderIdAndDay(fromId);
+
+            StringBuilder response = new StringBuilder("Sudah " + Constants.ADMIN_NAME + ", catet pak\n");
+
+            response.append("Berikut pengeluaran hari ini:\n");
+
+            transactions.forEach(trx->{
+                response.append(trx.getAmount()).append("\t|\t")
+                        .append(trx.getTransactionCategory().getName()).append("\t|\t")
+                        .append(trx.getNote())
+                        .append("\n");
+
+            });
+
+            response.append("Total : ").append(transactionRepository.calculateAmountBySenderId(fromId));
+
+            sendMessage.setText(response.toString());
+
         }
 
     }
