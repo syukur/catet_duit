@@ -53,11 +53,10 @@ public class ReturnUrlHandler extends Handler {
         newAccess.setSignature(signature);
         newAccess.setUrl(pathUrl);
 
-
         Date now = new Date();
         newAccess.setUpdatedDate(now);
         calendar.setTime(now);
-        calendar.add(Calendar.MINUTE, 1);
+        calendar.add(Calendar.MINUTE, 2);
         Date expired = calendar.getTime();
         newAccess.setExpired(expired);
 

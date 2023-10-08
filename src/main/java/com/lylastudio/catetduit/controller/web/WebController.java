@@ -21,7 +21,7 @@ public class WebController {
     }
 
     @GetMapping("/report")
-    public String report(Model model, @RequestParam(value = "r", defaultValue = "default-val") String token){
+    public String report(Model model, @RequestParam(value = "r") String token){
 
         log.info("token__ : {}", token);
 

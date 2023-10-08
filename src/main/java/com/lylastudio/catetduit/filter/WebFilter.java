@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,45 +35,75 @@ public class WebFilter implements Filter {
        HttpServletRequest request = (HttpServletRequest) servletRequest;
        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-      log.info("method: {}", request.getMethod() );
-//
-//       String requestParameter = request.getQueryString();
-//
-//      String signature = "";
-//      String[] arrOfParam = requestParameter.split("&");
-//      for ( String param : arrOfParam ){
-//          String[] arrOfKeyValue = param.split("=");
-//          String key = arrOfKeyValue[0];
-//          if(key.equals("r")){
-//             signature =  arrOfKeyValue[1];
-//          }
-//      }
-//
-//      log.info("signature: {}", signature);
-//
-//      TOneTimeAccess access = tOneTimeAccessRepository.findBySignature(signature);
-//
-//      if(access == null){
-//          log.info("UNAUTHORIZED: access-token-not-found");
-//          response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UNAUTHORIZED");
-//        return;
-//      }else{
-//
-//        Date now = new Date();
-//
-//        if ( now.after(access.getExpired()) ){
-//            log.info("UNAUTHORIZED: link-expired.");
-//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UNAUTHORIZED");
-//        }
-//
-//      }
-//
+       String requestMethod = request.getMethod();
 
-      chain.doFilter(servletRequest, servletResponse);
+       String signature ="";
+       if("GET".equals(requestMethod)){
+            signature = getSignature(request);
+       }else if ("POST".equals(requestMethod)){
+           signature = postSignature(request);
+       }
+
+       if( ("".equals(signature)) || (null == signature) ){
+           log.info("BAD REQUEST: signature-not-send");
+           response.sendError(HttpServletResponse.SC_BAD_REQUEST,"BAD REQUEST");
+           return;
+       }
+
+       if (!validateSignature(signature)){
+           response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"BAD REQUEST");
+           return;
+       }
+
+       chain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
     public void destroy() {
         Filter.super.destroy();
+    }
+
+    private String getSignature(HttpServletRequest request){
+
+        String requestParameter = request.getQueryString();
+
+        String signature = "";
+        String[] arrOfParam = requestParameter.split("&");
+        for ( String param : arrOfParam ){
+            String[] arrOfKeyValue = param.split("=");
+            String key = arrOfKeyValue[0];
+            if(key.equals("r")){
+                signature =  arrOfKeyValue[1];
+            }
+        }
+
+        return signature;
+
+    }
+
+    private String postSignature(HttpServletRequest request){
+        return request.getParameter("token");
+    }
+
+    private boolean validateSignature(String signature){
+
+        TOneTimeAccess access = tOneTimeAccessRepository.findBySignature(signature);
+
+        boolean result = true;
+
+        if(access == null){
+            log.info("UNAUTHORIZED: signature-not-found");
+            result = false;
+        }else{
+
+            Date now = new Date();
+
+            if ( now.after(access.getExpired()) ){
+                log.info("UNAUTHORIZED: signature-expired.");
+                result = false;
+            }
+        }
+
+        return  result;
     }
 }
