@@ -38,18 +38,6 @@ public class HandlerHolder {
         handlers.put(keyword, handler);
     }
 
-//    private Handler tryGetAnotherHandler(String keyword) {
-//        String[] data = keyword.split("\\:");
-//
-//        String newKeyword= data[0];
-//        Handler handler = handlers.get(newKeyword);
-//        if( handler == null){
-//            handler = handlers.get("keyword-not-define");
-//        }
-//
-//        return handler;
-//    }
-
     private boolean notRegisteredAccount(Update update){
 
         String fromId = String.valueOf(update.getMessage().getFrom().getId());

@@ -66,7 +66,7 @@ public class TransactionHandler extends Handler {
             transaction.setTransactionCategory(category);
             transactionRepository.save(transaction);
 
-            String tgl = LocalDateTime.now().format(formatter);
+            //String tgl = LocalDateTime.now().format(formatter);
             List<TTransaction> transactions = transactionRepository.findBySenderIdAndDay(fromId);
 
             StringBuilder response = new StringBuilder("Sudah " + Constants.ADMIN_NAME + ", catet pak\n");
@@ -74,14 +74,16 @@ public class TransactionHandler extends Handler {
             response.append("Berikut pengeluaran hari ini:\n");
 
             transactions.forEach(trx->{
-                response.append(trx.getAmount()).append("\t|\t")
+                response.append( stringHelper.formatCurrency(trx.getAmount())).append("\t|\t")
                         .append(trx.getTransactionCategory().getName()).append("\t|\t")
                         .append(trx.getNote())
                         .append("\n");
 
             });
 
-            response.append("Total : ").append(transactionRepository.calculateAmountBySenderId(fromId));
+            response.append("Total : ").append(
+                    stringHelper.formatCurrency( transactionRepository.calculateAmountBySenderId(fromId) )
+            );
 
             sendMessage.setText(response.toString());
 

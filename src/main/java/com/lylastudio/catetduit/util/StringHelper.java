@@ -3,8 +3,11 @@ package com.lylastudio.catetduit.util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +17,14 @@ public class StringHelper {
 
     Pattern replacePattern = Pattern.compile("\\$\\{([^}]+)\\}");
     Pattern splitPattern = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"");
+
+    Locale locale;
+    NumberFormat currencyFormater;
+
+    public StringHelper(){
+        locale = new Locale("id","ID");
+        currencyFormater = NumberFormat.getNumberInstance(locale);
+    }
 
     public String replacePattern(String input, HashMap<String, String> replacer){
 
@@ -51,4 +62,15 @@ public class StringHelper {
         // Convert the ArrayList to an array
         return tokens;
     }
+
+    public String formatCurrency(BigInteger amount){
+        return currencyFormater.format(amount);
+    }
+
+//    public static void main(String[] args) {
+//        Locale indonesia = new Locale("id","ID");
+//        NumberFormat rupiahFormat = NumberFormat.getInstance(indonesia);
+//        Integer amount = 100000;
+//        log.info(rupiahFormat.format(amount));
+//    }
 }
